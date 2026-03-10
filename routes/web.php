@@ -1,78 +1,48 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-// Route pertama
-Route::get('/perkenalan', function () {
-
-    return '<h1>Halo! Nama saya Muhammad Vallentino Akbar</h1>
-
-            <p>NIM: 4124040 | Prodi: Sistem Informasi</p>
-
-            <p>Alhamdulillah Sedikit Banged Pak Pusingnya hehehe</p>
-
-            <p>Saya siap belajar Laravel! Tapi Pelan-Pelan Ya Pak heheheh 🚀</p>';
-});
-
-// Route kedua
-Route::get('/perkenalan-ubed', function () {
-
-    return '<h1>Halo! Nama saya Ubedilah</h1>
-
-            <p>Bismillah Colaborasi</p>
-
-            <p>Saya siap belajar Laravel! Tapi Pelan-Pelan Ya Pak heheheh 🚀</p>';
-});
-
-// Route ketiga
-Route::get('/perkenalan-sania', function () {
-
-    return '<h1>Halo! Nama saya Sania</h1>
-
-            <p>Bismillah Colaborasi</p>
-
-            <p>Saya siap belajar Laravel! Tapi Pelan-Pelan Ya Pak heheheh 🚀</p>';
-});
-
-Route::get('/animal/{nama}', function ($nama) {
-
-    $animals = [
-        "singa" => [
-            "jenis" => "Karnivora",
-            "deskripsi" => "Singa dikenal sebagai raja hutan dan memakan daging."
-        ],
-        "gajah" => [
-            "jenis" => "Herbivora",
-            "deskripsi" => "Gajah adalah hewan darat terbesar yang memakan rumput dan daun."
-        ],
-        "ayam" => [
-            "jenis" => "Omnivora",
-            "deskripsi" => "Ayam memakan biji-bijian, serangga, dan makanan lainnya."
-        ],
-        "kucing" => [
-            "jenis" => "Karnivora",
-            "deskripsi" => "Kucing adalah hewan peliharaan yang memakan daging."
-        ]
-    ];
-
-    if(array_key_exists($nama, $animals)){
-        $hewan = $animals[$nama];
-
-        return "<h1>Animal Dictionary</h1>
-                <h2>Nama Hewan: $nama</h2>
-                <p>Jenis: {$hewan['jenis']}</p>
-                <p>Deskripsi: {$hewan['deskripsi']}</p>";
-    } else {
-        return "<h1>Hewan tidak ditemukan di kamus</h1>";
-    }
-
-});
-
+use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\KatalogController;
+//Route Perkenalan
+Route::get('/perkenalan', function () {
+    return '<h1>Halo! Nama saya Muhammad Vallentino Akbar</h1>
+            <p>NIM: 4124040 | Prodi: Sistem Informasi</p>
+            <p>Alhamdulillah Sedikit Banged Pak Pusingnya hehehe</p>
+            <p>Saya siap belajar Laravel! Tapi Pelan-Pelan Ya Pak 🚀</p>';
+})->name('perkenalan');
 
-Route::get('/profil', [ProfilController::class, 'index']);
+Route::get('/perkenalan-ubed', function () {
+    return '<h1>Halo! Nama saya Ubedilah</h1>
+            <p>Bismillah Kolaborasi</p>
+            <p>Saya siap belajar Laravel! 🚀</p>';
+})->name('perkenalan.ubed');
 
-Route::get('/katalog', [KatalogController::class, 'hewan']);
+//Route Statis (Animal Dictionary)
+Route::get('/about', function () {
+    return "<h1>About Animal Dictionary</h1>
+            <p>Website sederhana untuk mengenal berbagai jenis hewan.</p>";
+})->name('about');
 
-Route::get('/katalog/{nama}', [KatalogController::class, 'detail']);
+Route::get('/creator', function () {
+    return "<h1>Creator</h1>
+            <p>Muhammad Vallentino Akbar</p>
+            <p>Program Studi: Sistem Informasi</p>";
+})->name('creator');
+
+Route::get('/help', function () {
+    return "<h1>Help</h1>
+            <p>Buka /animals untuk melihat daftar hewan.</p>";
+})->name('help');
+
+//Route Animal Dictionary (Controller)
+Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
+Route::get('/animals/{name}', [AnimalController::class, 'show'])->name('animals.show');
+
+//Route Katalog Hewan
+Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog.index');
+Route::get('/katalog/{id}', [KatalogController::class, 'show'])->name('katalog.show');
+
+//Route Profil Mahasiswa
+Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
+Route::get('/profil/{nim}', [ProfilController::class, 'show'])->name('profil.show');

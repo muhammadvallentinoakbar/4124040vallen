@@ -8,9 +8,19 @@ class ProfilController extends Controller
 {
     public function index()
     {
-        return "<h1>Profil Mahasiswa</h1>
-                <p>Nama: Muhammad Vallentino Akbar</p>
-                <p>NIM: 4124040</p>
-                <p>Prodi: Sistem Informasi</p>";
+        $data = [
+            'nama' => 'Muhammad Vallentino Akbar',
+            'nim' => '4124040',
+            'prodi' => 'Sistem Informasi',
+            'semester' => '4',
+            'keahlian' => ['HTML', 'CSS', 'PHP', 'Laravel', 'Database']
+        ];
+
+        return view('profil', $data);
+    }
+
+    public function show($nim)
+    {
+        return "Profil mahasiswa dengan NIM: " . $nim;
     }
 }
