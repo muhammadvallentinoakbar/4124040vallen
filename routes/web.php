@@ -46,3 +46,14 @@ Route::get('/katalog/{id}', [KatalogController::class, 'show'])->name('katalog.s
 //Route Profil Mahasiswa
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
 Route::get('/profil/{nim}', [ProfilController::class, 'show'])->name('profil.show');
+
+use App\Http\Controllers\ProdukController;
+
+Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/produk', [ProdukController::class, 'index']);
+Route::get('/produk/create', [ProdukController::class, 'create']);
+Route::post('/produk', [ProdukController::class, 'store']);
+Route::get('/produk/{id}', [ProdukController::class, 'show']);
